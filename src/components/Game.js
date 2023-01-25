@@ -13,6 +13,10 @@ class Game extends Component {
       width: WIDTH,
       height: HEIGHT,
       pixelArt: true,
+      physics: {
+        default: "arcade",
+        arcade: { gravity: { y: 0 } },
+      },
       scene: {
         preload: preload,
         create: create,
@@ -24,6 +28,10 @@ class Game extends Component {
     function preload() {
       this.load.image("tiles", "assets/tilemaps/debug-tiles.png");
       this.load.tilemapTiledJSON("map", "assets/tilemaps/debug-map.json");
+      this.load.spritesheet("player", "assets/sprites/temp-player.png", {
+        frameWidth: 16,
+        frameHeight: 16,
+      }); // TEMP SPRITES - change later
     }
 
     function create() {
@@ -31,6 +39,7 @@ class Game extends Component {
       const tiles = map.addTilesetImage("debug-tiles", "tiles");
       const bg = map.createLayer("background", tiles, 0, 0);
       const walls = map.createLayer("walls", tiles, 0, 0);
+      this.player = this.physics.add.sprite(100, 100, "player", 0);
 
       this.cameras.main.setBounds(0, 0, bg.width, bg.height, true).setZoom(5);
     }
