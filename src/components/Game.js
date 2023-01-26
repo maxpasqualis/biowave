@@ -20,7 +20,7 @@ class Game extends Component {
       scene: {
         preload: preload,
         create: create,
-        // update: update,
+        update: update,
       },
     };
     this.game = new Phaser.Game(config);
@@ -42,9 +42,32 @@ class Game extends Component {
       this.player = this.physics.add.sprite(100, 100, "player", 0);
 
       this.cameras.main.setBounds(0, 0, bg.width, bg.height, true).setZoom(5);
+
+      this.cursors = this.input.keyboard.createCursorKeys();
     }
 
-    // function update(time, delta){}
+    function update(time, delta) {
+      this.player.body.setVelocity(0);
+      // prevents player from trying to move 2 opposite directions at once
+      if (
+        (this.cursors.left.isDown && this.cursors.right.isDown) ||
+        (this.cursors.up.isDown && this.cursors.down.isDown)
+      ) {
+        this.player.body.setVelocityX(0);
+      } // left
+      else if (this.cursors.left.isDown) {
+        this.player.body.setVelocityX(-50);
+        // right
+      } else if (this.cursors.right.isDown) {
+        this.player.body.setVelocityX(50);
+        // up
+      } else if (this.cursors.up.isDown) {
+        this.player.body.setVelocityY(-50);
+        // down
+      } else if (this.cursors.down.isDown) {
+        this.player.body.setVelocityY(50);
+      }
+    }
   }
   render() {
     return <div id="game-container"></div>;
