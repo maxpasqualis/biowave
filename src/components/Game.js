@@ -53,6 +53,9 @@ class Game extends Component {
       this.cursors = this.input.keyboard.createCursorKeys();
 
       Wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+      Akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+      Skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+      Dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     }
 
     function update(time, delta) {
@@ -60,11 +63,29 @@ class Game extends Component {
       if (Wkey.isDown) {
         this.player.direction = "up";
         this.player.y -= SPEED;
-        console.log(this.player);
+      } else if (Skey.isDown) {
+        this.player.direction = "down";
+        this.player.y += SPEED;
+      } else if (Akey.isDown) {
+        this.player.direction = "left";
+        this.player.x -= SPEED;
+      } else if (Dkey.isDown) {
+        this.player.direction = "right";
+        this.player.x += SPEED;
       }
-      if (!Wkey.isDown && this.player.y % TILESIZE) {
+
+      // corrects player movements to ensure they adhere to grid
+      if (!Wkey.isDown && !Skey.isDown && this.player.y % TILESIZE) {
         if (this.player.direction === "up") {
           this.player.y -= SPEED;
+        } else if (this.player.direction === "down") {
+          this.player.y += SPEED;
+        }
+      } else if (!Akey.isDown && !Dkey.isDown && this.player.x % TILESIZE) {
+        if (this.player.direction === "left") {
+          this.player.x -= SPEED;
+        } else if (this.player.direction === "right") {
+          this.player.x += SPEED;
         }
       }
     }
