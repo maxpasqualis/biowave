@@ -9,6 +9,7 @@ var tileProgress = 0;
 
 class Game extends Component {
   componentDidMount() {
+    // ==================== CONFIG ====================
     const config = {
       type: Phaser.AUTO,
       parent: "game-container",
@@ -29,6 +30,8 @@ class Game extends Component {
 
     var Wkey, Akey, Skey, Dkey;
     this.game = new Phaser.Game(config);
+
+    // ==================== MAIN GAME FUNCTIONS ====================
 
     function preload() {
       this.load.image("tiles", "assets/tilemaps/debug-tiles.png");
@@ -61,37 +64,36 @@ class Game extends Component {
     }
 
     function update(time, delta) {
-      if (!this.player.isMoving) {
+      if (
+        !this.player.isMoving &&
+        (Wkey.isDown || Akey.isDown || Skey.isDown || Dkey.isDown)
+      ) {
+        this.player.isMoving = true;
         if (Wkey.isDown) {
           this.player.direction = "up";
-          this.player.isMoving = true;
         } else if (Akey.isDown) {
           this.player.direction = "left";
-          this.player.isMoving = true;
         } else if (Skey.isDown) {
           this.player.direction = "down";
-          this.player.isMoving = true;
         } else if (Dkey.isDown) {
           this.player.direction = "right";
-          this.player.isMoving = true;
         }
       }
 
       if (this.player.isMoving) {
         if (this.player.direction === "up") {
           this.player.y -= SPEED;
-          tileProgress += SPEED;
-          if (tileProgress === TILESIZE) {
-            tileProgress = 0;
-            this.player.isMoving = false;
-          }
+        } else if (this.player.direction === "down") {
+          this.player.y += SPEED;
         } else if (this.player.direction === "left") {
           this.player.x -= SPEED;
-          tileProgress += SPEED;
-          if (tileProgress === TILESIZE) {
-            tileProgress = 0;
-            this.player.isMoving = false;
-          }
+        } else if (this.player.direction === "right") {
+          this.player.x += SPEED;
+        }
+        tileProgress += SPEED;
+        if (tileProgress >= TILESIZE) {
+          tileProgress = 0;
+          this.player.isMoving = false;
         }
       }
     }
