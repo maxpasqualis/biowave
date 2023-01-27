@@ -5,6 +5,7 @@ const WIDTH = 800;
 const HEIGHT = 600;
 const TILESIZE = 16;
 const SPEED = 0.5;
+var tileProgress = 0;
 
 class Game extends Component {
   componentDidMount() {
@@ -44,9 +45,10 @@ class Game extends Component {
       const bg = map.createLayer("background", tiles, 0, 0);
       const walls = map.createLayer("walls", tiles, 0, 0);
       // this.player = this.physics.add.sprite(100, 100, "player", 0);
-      this.player = this.add.image(80, 80, "player");
+      this.player = this.add.image(80, 80, "player", 0);
       this.player.setOrigin(0, 0);
       this.player.direction = "down";
+      this.player.isMoving = false;
 
       this.cameras.main.setBounds(0, 0, bg.width, bg.height, true).setZoom(3);
 
@@ -59,33 +61,37 @@ class Game extends Component {
     }
 
     function update(time, delta) {
-      // this.player.body.setVelocity(0);
-      if (Wkey.isDown) {
-        this.player.direction = "up";
-        this.player.y -= SPEED;
-      } else if (Skey.isDown) {
-        this.player.direction = "down";
-        this.player.y += SPEED;
-      } else if (Akey.isDown) {
-        this.player.direction = "left";
-        this.player.x -= SPEED;
-      } else if (Dkey.isDown) {
-        this.player.direction = "right";
-        this.player.x += SPEED;
+      if (!this.player.isMoving) {
+        if (Wkey.isDown) {
+          this.player.direction = "up";
+          this.player.isMoving = true;
+        } else if (Akey.isDown) {
+          this.player.direction = "left";
+          this.player.isMoving = true;
+        } else if (Skey.isDown) {
+          this.player.direction = "down";
+          this.player.isMoving = true;
+        } else if (Dkey.isDown) {
+          this.player.direction = "right";
+          this.player.isMoving = true;
+        }
       }
 
-      // corrects player movements to ensure they adhere to grid
-      if (!Wkey.isDown && !Skey.isDown && this.player.y % TILESIZE) {
+      if (this.player.isMoving) {
         if (this.player.direction === "up") {
           this.player.y -= SPEED;
-        } else if (this.player.direction === "down") {
-          this.player.y += SPEED;
-        }
-      } else if (!Akey.isDown && !Dkey.isDown && this.player.x % TILESIZE) {
-        if (this.player.direction === "left") {
+          tileProgress += SPEED;
+          if (tileProgress === TILESIZE) {
+            tileProgress = 0;
+            this.player.isMoving = false;
+          }
+        } else if (this.player.direction === "left") {
           this.player.x -= SPEED;
-        } else if (this.player.direction === "right") {
-          this.player.x += SPEED;
+          tileProgress += SPEED;
+          if (tileProgress === TILESIZE) {
+            tileProgress = 0;
+            this.player.isMoving = false;
+          }
         }
       }
     }
