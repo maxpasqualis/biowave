@@ -4,12 +4,15 @@ import Phaser from "phaser";
 const WIDTH = 800;
 const HEIGHT = 600;
 const TILESIZE = 16;
-const SPEED = 0.5;
+// speed must be a factor of tilesize or it will break the grid system
+// ex. if tilesize is 16, speeds include 0.2, 0.4, 0.5, 0.8, or 1
+const SPEED = 0.8;
 var tileProgress = 0;
 
 class Game extends Component {
   componentDidMount() {
-    // ==================== CONFIG ====================
+    // ==================== CONFIG + SETUP ====================
+
     const config = {
       type: Phaser.AUTO,
       parent: "game-container",
@@ -53,7 +56,7 @@ class Game extends Component {
       this.player.direction = "down";
       this.player.isMoving = false;
 
-      this.cameras.main.setBounds(0, 0, bg.width, bg.height, true).setZoom(3);
+      this.cameras.main.setBounds(0, 0, bg.width, bg.height, true).setZoom(5);
 
       this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -81,6 +84,17 @@ class Game extends Component {
       }
 
       if (this.player.isMoving) {
+        // attempted grid fix.. needs more work
+        if (tileProgress + SPEED > TILESIZE) {
+          tileProgress = TILESIZE;
+        } else {
+          tileProgress += SPEED;
+        }
+
+        if (tileProgress >= TILESIZE) {
+          tileProgress = 0;
+          this.player.isMoving = false;
+        }
         if (this.player.direction === "up") {
           this.player.y -= SPEED;
         } else if (this.player.direction === "down") {
@@ -89,11 +103,6 @@ class Game extends Component {
           this.player.x -= SPEED;
         } else if (this.player.direction === "right") {
           this.player.x += SPEED;
-        }
-        tileProgress += SPEED;
-        if (tileProgress >= TILESIZE) {
-          tileProgress = 0;
-          this.player.isMoving = false;
         }
       }
     }
