@@ -38,7 +38,11 @@ class Game extends Component {
 
     function preload() {
       this.load.image("tiles", "assets/tilemaps/debug-tiles.png");
-      this.load.tilemapTiledJSON("map", "assets/tilemaps/debug-map.json");
+      this.load.tilemapTiledJSON(
+        "map",
+        "assets/tilemaps/debug-map-collisions.json"
+      );
+      this.load.json("mapjson", "assets/tilemaps/debug-map-collisions.json");
       this.load.spritesheet("player", "assets/sprites/temp-player.png", {
         frameWidth: TILESIZE,
         frameHeight: TILESIZE,
@@ -49,12 +53,30 @@ class Game extends Component {
       const map = this.make.tilemap({ key: "map" });
       const tiles = map.addTilesetImage("debug-tiles", "tiles");
       const bg = map.createLayer("background", tiles, 0, 0);
+      const collisionTiles = map.createLayer("collisions", tiles, 0, 0); // for debugging
       const walls = map.createLayer("walls", tiles, 0, 0);
-      // this.player = this.physics.add.sprite(100, 100, "player", 0);
-      this.player = this.add.image(80, 80, "player", 0);
+      this.player = this.add.image(80, 64, "player", 0);
+
       this.player.setOrigin(0, 0);
       this.player.direction = "down";
       this.player.isMoving = false;
+      this.player.isColliding = {
+        up: false,
+        left: false,
+        down: false,
+        right: false,
+      };
+
+      this.collisionData = [];
+      const mapJson = this.cache.json.get("mapjson");
+      for (const layer of mapJson.layers) {
+        if (layer.name === "collisions") {
+          for (let i = 0; i < layer.data.length; i += layer.width) {
+            const chunk = layer.data.slice(i, i + layer.width);
+            this.collisionData.push(chunk);
+          }
+        }
+      }
 
       this.cameras.main.setBounds(0, 0, bg.width, bg.height, true).setZoom(5);
 
@@ -91,18 +113,52 @@ class Game extends Component {
           tileProgress += SPEED;
         }
 
+        if (this.player.direction === "up" && !this.player.isColliding.up) {
+          this.player.y -= SPEED;
+        } else if (
+          this.player.direction === "down" &&
+          !this.player.isColliding.down
+        ) {
+          this.player.y += SPEED;
+        } else if (
+          this.player.direction === "left" &&
+          !this.player.isColliding.left
+        ) {
+          this.player.x -= SPEED;
+        } else if (
+          this.player.direction === "right" &&
+          !this.player.isColliding.right
+        ) {
+          this.player.x += SPEED;
+        }
         if (tileProgress >= TILESIZE) {
           tileProgress = 0;
           this.player.isMoving = false;
-        }
-        if (this.player.direction === "up") {
-          this.player.y -= SPEED;
-        } else if (this.player.direction === "down") {
-          this.player.y += SPEED;
-        } else if (this.player.direction === "left") {
-          this.player.x -= SPEED;
-        } else if (this.player.direction === "right") {
-          this.player.x += SPEED;
+          const gridX = Math.round(this.player.x / TILESIZE);
+          const gridY = Math.round(this.player.y / TILESIZE);
+
+          if (this.collisionData[gridY - 1][gridX] > 0) {
+            this.player.isColliding.up = true;
+          } else {
+            this.player.isColliding.up = false;
+          }
+          if (this.collisionData[gridY + 1][gridX] > 0) {
+            this.player.isColliding.down = true;
+          } else {
+            this.player.isColliding.down = false;
+          }
+          if (this.collisionData[gridY][gridX - 1] > 0) {
+            this.player.isColliding.left = true;
+          } else {
+            this.player.isColliding.left = false;
+          }
+          if (this.collisionData[gridY][gridX + 1] > 0) {
+            this.player.isColliding.right = true;
+          } else {
+            this.player.isColliding.right = false;
+          }
+          console.log(`${gridX} ${gridY}`);
+          console.log(this.player.isColliding);
         }
       }
     }
