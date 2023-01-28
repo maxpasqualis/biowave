@@ -21,6 +21,7 @@
 *.tiled-project
 *.tiled-session
 *.tmx
+*.tsx
 
 npm-debug.log*
 yarn-debug.log*
