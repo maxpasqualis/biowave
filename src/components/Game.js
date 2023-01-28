@@ -90,6 +90,7 @@ class Game extends Component {
     }
 
     function update(time, delta) {
+      // runs when a new movement is initiated and the player can move
       if (
         !this.player.isMoving &&
         (Wkey.isDown || Akey.isDown || Skey.isDown || Dkey.isDown)
@@ -97,15 +98,20 @@ class Game extends Component {
         this.player.isMoving = true;
         if (Wkey.isDown) {
           this.player.direction = "up";
+          this.player.setTexture("player", 1);
         } else if (Akey.isDown) {
           this.player.direction = "left";
+          this.player.setTexture("player", 3);
         } else if (Skey.isDown) {
           this.player.direction = "down";
+          this.player.setTexture("player", 5);
         } else if (Dkey.isDown) {
           this.player.direction = "right";
+          this.player.setTexture("player", 7);
         }
       }
 
+      // runs after a movement has been initiated
       if (this.player.isMoving) {
         // attempted grid fix.. needs more work
         if (tileProgress + SPEED > TILESIZE) {
@@ -132,34 +138,50 @@ class Game extends Component {
         ) {
           this.player.x += SPEED;
         }
+
+        // runs after a tile is traveled
         if (tileProgress >= TILESIZE) {
           tileProgress = 0;
           this.player.isMoving = false;
           const gridX = Math.round(this.player.x / TILESIZE);
           const gridY = Math.round(this.player.y / TILESIZE);
 
-          if (this.collisionData[gridY - 1][gridX] > 0) {
+          if (gridY - 1 <= -1 || this.collisionData[gridY - 1][gridX] > 0) {
             this.player.isColliding.up = true;
           } else {
             this.player.isColliding.up = false;
           }
-          if (this.collisionData[gridY + 1][gridX] > 0) {
+          if (
+            gridY + 1 >= this.collisionData.length ||
+            this.collisionData[gridY + 1][gridX] > 0
+          ) {
             this.player.isColliding.down = true;
           } else {
             this.player.isColliding.down = false;
           }
-          if (this.collisionData[gridY][gridX - 1] > 0) {
+          if (gridX - 1 <= -1 || this.collisionData[gridY][gridX - 1] > 0) {
             this.player.isColliding.left = true;
           } else {
             this.player.isColliding.left = false;
           }
-          if (this.collisionData[gridY][gridX + 1] > 0) {
+          if (
+            gridX + 1 >= this.collisionData[0].length ||
+            this.collisionData[gridY][gridX + 1] > 0
+          ) {
             this.player.isColliding.right = true;
           } else {
             this.player.isColliding.right = false;
           }
-          console.log(`${gridX} ${gridY}`);
-          console.log(this.player.isColliding);
+
+          if (this.player.direction === "up") {
+            this.player.setTexture("player", 0);
+          } else if (this.player.direction === "left") {
+            this.player.setTexture("player", 2);
+          } else if (this.player.direction === "down") {
+            this.player.setTexture("player", 4);
+          } else if (this.player.direction === "right") {
+            this.player.setTexture("player", 6);
+          }
         }
       }
     }
