@@ -79,6 +79,7 @@ class Game extends Component {
       }
 
       this.cameras.main.setBounds(0, 0, bg.width, bg.height, true).setZoom(5);
+      this.cameras.main.startFollow(this.player);
 
       this.cursors = this.input.keyboard.createCursorKeys();
 
