@@ -98,13 +98,13 @@ class Game extends Component {
         this.player.isMoving = true;
         if (Wkey.isDown) {
           this.player.direction = "up";
-          this.player.setTexture("player", 1);
+          this.player.setTexture("player", 5);
         } else if (Akey.isDown) {
           this.player.direction = "left";
           this.player.setTexture("player", 3);
         } else if (Skey.isDown) {
           this.player.direction = "down";
-          this.player.setTexture("player", 5);
+          this.player.setTexture("player", 1);
         } else if (Dkey.isDown) {
           this.player.direction = "right";
           this.player.setTexture("player", 7);
@@ -174,11 +174,11 @@ class Game extends Component {
           }
 
           if (this.player.direction === "up") {
-            this.player.setTexture("player", 0);
+            this.player.setTexture("player", 4);
           } else if (this.player.direction === "left") {
             this.player.setTexture("player", 2);
           } else if (this.player.direction === "down") {
-            this.player.setTexture("player", 4);
+            this.player.setTexture("player", 0);
           } else if (this.player.direction === "right") {
             this.player.setTexture("player", 6);
           }
