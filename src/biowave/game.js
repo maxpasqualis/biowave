@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { TILESIZE, SPEED } from "./config";
-import playerFuncs from "./helpers";
+import helpers from "./helpers";
 
 var tileProgress = 0;
 var Wkey, Akey, Skey, Dkey;
@@ -52,11 +52,10 @@ class Overworld extends Phaser.Scene {
         }
       }
     }
+    helpers.player.handleCollisions(this, this.player.x, this.player.y);
 
     this.cameras.main.setBounds(0, 0, bg.width, bg.height, true).setZoom(5);
     this.cameras.main.startFollow(this.player);
-
-    this.cursors = this.input.keyboard.createCursorKeys();
 
     Wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     Akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -65,19 +64,23 @@ class Overworld extends Phaser.Scene {
   }
 
   update(time, delta) {
-    playerFuncs.setSprite(this, Wkey, Skey, Akey, Dkey);
+    helpers.player.setSprite(this, Wkey, Skey, Akey, Dkey);
 
     if (this.player.isMoving) {
       tileProgress += SPEED;
-      playerFuncs.handleMovement(this, SPEED);
+      helpers.player.handleMovement(this, SPEED);
 
       // runs after a tile is traveled
       if (tileProgress >= TILESIZE) {
         tileProgress = 0;
         this.player.isMoving = false;
-        const gridX = Math.round(this.player.x / TILESIZE);
-        const gridY = Math.round(this.player.y / TILESIZE);
-        playerFuncs.handleCollisions(this, gridX, gridY);
+
+        // const coords = helpers.getGridCoords(
+        //   TILESIZE,
+        //   this.player.x,
+        //   this.player.y
+        // );
+        helpers.player.handleCollisions(this, this.player.x, this.player.y);
       }
     }
   }

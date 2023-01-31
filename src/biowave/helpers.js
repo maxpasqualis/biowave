@@ -1,4 +1,12 @@
-const playerFuncs = {
+import { TILESIZE } from "./config";
+
+function getGridCoords(inputX, inputY) {
+  const x = Math.round(inputX / TILESIZE);
+  const y = Math.round(inputY / TILESIZE);
+  return { x, y };
+}
+
+const player = {
   setSprite(game, upkey, downkey, leftkey, rightkey) {
     if (
       !game.player.isMoving &&
@@ -51,27 +59,34 @@ const playerFuncs = {
     }
   },
   handleCollisions(game, x, y) {
-    if (y - 1 <= -1 || game.collisionData[y - 1][x] > 0) {
+    const gridCoords = getGridCoords(x, y);
+    if (
+      gridCoords.y - 1 <= -1 ||
+      game.collisionData[gridCoords.y - 1][gridCoords.x] > 0
+    ) {
       game.player.isColliding.up = true;
     } else {
       game.player.isColliding.up = false;
     }
     if (
-      y + 1 >= game.collisionData.length ||
-      game.collisionData[y + 1][x] > 0
+      gridCoords.y + 1 >= game.collisionData.length ||
+      game.collisionData[gridCoords.y + 1][gridCoords.x] > 0
     ) {
       game.player.isColliding.down = true;
     } else {
       game.player.isColliding.down = false;
     }
-    if (x - 1 <= -1 || game.collisionData[y][x - 1] > 0) {
+    if (
+      gridCoords.x - 1 <= -1 ||
+      game.collisionData[gridCoords.y][gridCoords.x - 1] > 0
+    ) {
       game.player.isColliding.left = true;
     } else {
       game.player.isColliding.left = false;
     }
     if (
-      x + 1 >= game.collisionData[0].length ||
-      game.collisionData[y][x + 1] > 0
+      gridCoords.x + 1 >= game.collisionData[0].length ||
+      game.collisionData[gridCoords.y][gridCoords.x + 1] > 0
     ) {
       game.player.isColliding.right = true;
     } else {
@@ -79,5 +94,6 @@ const playerFuncs = {
     }
   },
 };
+const helpers = { getGridCoords, player };
 
-export default playerFuncs;
+export default helpers;
