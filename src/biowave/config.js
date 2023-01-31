@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import Overworld from "./game";
+import Overworld from "./overworld";
 
 export const WIDTH = 800;
 export const HEIGHT = 600;
