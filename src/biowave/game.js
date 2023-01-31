@@ -5,7 +5,6 @@ import helpers from "./helpers";
 var tileProgress = 0;
 var Wkey, Akey, Skey, Dkey;
 
-// ==================== MAIN GAME FUNCTIONS ====================
 class Overworld extends Phaser.Scene {
   constructor() {
     super("Overworld");
@@ -74,12 +73,6 @@ class Overworld extends Phaser.Scene {
       if (tileProgress >= TILESIZE) {
         tileProgress = 0;
         this.player.isMoving = false;
-
-        // const coords = helpers.getGridCoords(
-        //   TILESIZE,
-        //   this.player.x,
-        //   this.player.y
-        // );
         helpers.player.handleCollisions(this, this.player.x, this.player.y);
       }
     }

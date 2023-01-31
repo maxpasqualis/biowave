@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Phaser from "phaser";
-// import playerFuncs from "../biowave/helpers";
 import config from "../biowave/config";
 
 class Game extends Component {
