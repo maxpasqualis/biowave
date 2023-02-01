@@ -49,13 +49,8 @@ class Overworld extends Phaser.Scene {
       down: false,
       right: false,
     };
-    this.player.isInteracting = false;
-    this.player.canInteract = {
-      up: false,
-      left: false,
-      down: false,
-      right: false,
-    };
+    this.player.interactingWith = null;
+    this.player.canInteract = false;
     helpers.player.handleCollisions(this, this.player.x, this.player.y);
 
     // camera setup
@@ -82,15 +77,12 @@ class Overworld extends Phaser.Scene {
         tileProgress = 0;
         this.player.isMoving = false;
         helpers.player.handleCollisions(this, this.player.x, this.player.y);
+        console.log(helpers.getGridCoords(this.player.x, this.player.y));
       }
     }
     if (Phaser.Input.Keyboard.JustDown(space)) {
-      if (!this.player.isInteracting) {
-        helpers.player.initiateInteraction(this);
-      } else {
-        this.player.isInteracting = false;
-      }
-      console.log(this.player.isInteracting);
+      helpers.player.initiateInteraction(this);
+      console.log(this.player.canInteract);
     }
   }
 }
