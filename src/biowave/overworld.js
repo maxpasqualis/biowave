@@ -12,11 +12,8 @@ class Overworld extends Phaser.Scene {
 
   preload() {
     this.load.image("tiles", "assets/tilemaps/debug-tiles.png");
-    this.load.tilemapTiledJSON(
-      "map",
-      "assets/tilemaps/debug-map-interactions.json"
-    );
-    this.load.json("mapjson", "assets/tilemaps/debug-map-interactions.json");
+    this.load.tilemapTiledJSON("map", "assets/tilemaps/debug-map.json");
+    this.load.json("mapjson", "assets/tilemaps/debug-map.json");
     this.load.spritesheet("player", "assets/sprites/temp-player.png", {
       frameWidth: TILESIZE,
       frameHeight: TILESIZE,
@@ -27,7 +24,7 @@ class Overworld extends Phaser.Scene {
     const map = this.make.tilemap({ key: "map" });
     const tiles = map.addTilesetImage("debug-tiles", "tiles");
     const bg = map.createLayer("background", tiles, 0, 0);
-    map.createLayer("collisions", tiles, 0, 0); // for debugging
+    // map.createLayer("collisions", tiles, 0, 0); // for debugging
     map.createLayer("walls", tiles, 0, 0);
     map.createLayer("interactable", tiles, 0, 0);
     this.player = this.add.image(80, 64, "player", 0);
