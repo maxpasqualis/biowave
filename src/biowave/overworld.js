@@ -40,14 +40,10 @@ class Overworld extends Phaser.Scene {
       right: false,
     };
 
-    this.collisionData = [];
     const mapJson = this.cache.json.get("mapjson");
     for (const layer of mapJson.layers) {
       if (layer.name === "collisions") {
-        for (let i = 0; i < layer.data.length; i += layer.width) {
-          const chunk = layer.data.slice(i, i + layer.width);
-          this.collisionData.push(chunk);
-        }
+        this.collisionData = helpers.gridify(layer);
       }
     }
     helpers.player.handleCollisions(this, this.player.x, this.player.y);

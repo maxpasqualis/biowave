@@ -6,6 +6,15 @@ function getGridCoords(inputX, inputY) {
   return { x, y };
 }
 
+function gridify(layer) {
+  const grid = [];
+  for (let i = 0; i < layer.data.length; i += layer.width) {
+    const chunk = layer.data.slice(i, i + layer.width);
+    grid.push(chunk);
+  }
+  return grid;
+}
+
 const player = {
   setSprite(game, upkey, downkey, leftkey, rightkey) {
     if (
@@ -94,6 +103,6 @@ const player = {
     }
   },
 };
-const helpers = { getGridCoords, player };
+const helpers = { getGridCoords, gridify, player };
 
 export default helpers;
