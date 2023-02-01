@@ -49,8 +49,7 @@ class Overworld extends Phaser.Scene {
       down: false,
       right: false,
     };
-    this.player.interactingWith = null;
-    this.player.canInteract = false;
+    this.player.interactable = null;
     helpers.player.handleCollisions(this, this.player.x, this.player.y);
 
     // camera setup
@@ -82,7 +81,7 @@ class Overworld extends Phaser.Scene {
     }
     if (Phaser.Input.Keyboard.JustDown(space)) {
       helpers.player.initiateInteraction(this);
-      console.log(this.player.canInteract);
+      console.log(this.player.interactable);
     }
   }
 }

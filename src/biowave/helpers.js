@@ -1,20 +1,43 @@
 import { TILESIZE } from "./config";
 
 function checkForInteractability(game, x, y) {
+  // looks like a lot of code, but it's a switch case so it's decently efficient!
   const gridCoords = getGridCoords(x, y);
-  if (
-    (game.player.direction === "up" &&
-      game.interactData[gridCoords.y - 1][gridCoords.x] > 0) ||
-    (game.player.direction === "down" &&
-      game.interactData[gridCoords.y + 1][gridCoords.x] > 0) ||
-    (game.player.direction === "left" &&
-      game.interactData[gridCoords.y][gridCoords.x - 1] > 0) ||
-    (game.player.direction === "right" &&
-      game.interactData[gridCoords.y][gridCoords.x + 1] > 0)
-  ) {
-    game.player.canInteract = true;
-  } else {
-    game.player.canInteract = false;
+  switch (game.player.direction) {
+    case "up":
+      if (game.interactData[gridCoords.y - 1][gridCoords.x]) {
+        game.player.interactable =
+          game.interactData[gridCoords.y - 1][gridCoords.x];
+      } else {
+        game.player.interactable = null;
+      }
+      break;
+    case "down":
+      if (game.interactData[gridCoords.y + 1][gridCoords.x]) {
+        game.player.interactable =
+          game.interactData[gridCoords.y + 1][gridCoords.x];
+      } else {
+        game.player.interactable = null;
+      }
+      break;
+    case "left":
+      if (game.interactData[gridCoords.y][gridCoords.x - 1]) {
+        game.player.interactable =
+          game.interactData[gridCoords.y][gridCoords.x - 1];
+      } else {
+        game.player.interactable = null;
+      }
+      break;
+    case "right":
+      if (game.interactData[gridCoords.y][gridCoords.x + 1]) {
+        game.player.interactable =
+          game.interactData[gridCoords.y][gridCoords.x + 1];
+      } else {
+        game.player.interactable = null;
+      }
+      break;
+    default:
+      game.player.interactable = null;
   }
 }
 
@@ -90,7 +113,7 @@ const player = {
     const gridCoords = getGridCoords(x, y);
     if (
       gridCoords.y - 1 <= -1 ||
-      game.collisionData[gridCoords.y - 1][gridCoords.x] > 0
+      game.collisionData[gridCoords.y - 1][gridCoords.x]
     ) {
       game.player.isColliding.up = true;
     } else {
@@ -98,7 +121,7 @@ const player = {
     }
     if (
       gridCoords.y + 1 >= game.collisionData.length ||
-      game.collisionData[gridCoords.y + 1][gridCoords.x] > 0
+      game.collisionData[gridCoords.y + 1][gridCoords.x]
     ) {
       game.player.isColliding.down = true;
     } else {
@@ -106,7 +129,7 @@ const player = {
     }
     if (
       gridCoords.x - 1 <= -1 ||
-      game.collisionData[gridCoords.y][gridCoords.x - 1] > 0
+      game.collisionData[gridCoords.y][gridCoords.x - 1]
     ) {
       game.player.isColliding.left = true;
     } else {
@@ -114,7 +137,7 @@ const player = {
     }
     if (
       gridCoords.x + 1 >= game.collisionData[0].length ||
-      game.collisionData[gridCoords.y][gridCoords.x + 1] > 0
+      game.collisionData[gridCoords.y][gridCoords.x + 1]
     ) {
       game.player.isColliding.right = true;
     } else {
