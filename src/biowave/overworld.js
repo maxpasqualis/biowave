@@ -85,12 +85,12 @@ class Overworld extends Phaser.Scene {
       }
     }
     if (Phaser.Input.Keyboard.JustDown(space)) {
-      helpers.player.checkForInteractability(
-        this,
-        this.player.x,
-        this.player.y
-      );
-      console.log(this.player.canInteract);
+      if (!this.player.isInteracting) {
+        helpers.player.initiateInteraction(this);
+      } else {
+        this.player.isInteracting = false;
+      }
+      console.log(this.player.isInteracting);
     }
   }
 }

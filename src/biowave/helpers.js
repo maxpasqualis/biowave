@@ -1,5 +1,42 @@
 import { TILESIZE } from "./config";
 
+function checkForInteractability(game, x, y) {
+  const gridCoords = getGridCoords(x, y);
+  if (
+    gridCoords.y - 1 <= -1 ||
+    game.interactData[gridCoords.y - 1][gridCoords.x] > 0
+  ) {
+    game.player.canInteract.up = true;
+  } else {
+    game.player.canInteract.up = false;
+  }
+  if (
+    gridCoords.y + 1 >= game.interactData.length ||
+    game.interactData[gridCoords.y + 1][gridCoords.x] > 0
+  ) {
+    game.player.canInteract.down = true;
+  } else {
+    game.player.canInteract.down = false;
+  }
+  if (
+    gridCoords.x - 1 <= -1 ||
+    game.interactData[gridCoords.y][gridCoords.x - 1] > 0
+  ) {
+    game.player.canInteract.left = true;
+  } else {
+    game.player.canInteract.left = false;
+  }
+  if (
+    gridCoords.x + 1 >= game.interactData[0].length ||
+    game.interactData[gridCoords.y][gridCoords.x + 1] > 0
+  ) {
+    game.player.canInteract.right = true;
+  } else {
+    game.player.canInteract.right = false;
+  }
+}
+
+// EXPORTS
 function getGridCoords(inputX, inputY) {
   const x = Math.round(inputX / TILESIZE);
   const y = Math.round(inputY / TILESIZE);
@@ -102,39 +139,15 @@ const player = {
       game.player.isColliding.right = false;
     }
   },
-  checkForInteractability(game, x, y) {
-    const gridCoords = getGridCoords(x, y);
+  initiateInteraction(game) {
+    checkForInteractability(game, game.player.x, game.player.y);
     if (
-      gridCoords.y - 1 <= -1 ||
-      game.interactData[gridCoords.y - 1][gridCoords.x] > 0
+      (game.player.canInteract.up && game.player.direction === "up") ||
+      (game.player.canInteract.left && game.player.direction === "left") ||
+      (game.player.canInteract.right && game.player.direction === "right") ||
+      (game.player.canInteract.down && game.player.direction === "down")
     ) {
-      game.player.canInteract.up = true;
-    } else {
-      game.player.canInteract.up = false;
-    }
-    if (
-      gridCoords.y + 1 >= game.interactData.length ||
-      game.interactData[gridCoords.y + 1][gridCoords.x] > 0
-    ) {
-      game.player.canInteract.down = true;
-    } else {
-      game.player.canInteract.down = false;
-    }
-    if (
-      gridCoords.x - 1 <= -1 ||
-      game.interactData[gridCoords.y][gridCoords.x - 1] > 0
-    ) {
-      game.player.canInteract.left = true;
-    } else {
-      game.player.canInteract.left = false;
-    }
-    if (
-      gridCoords.x + 1 >= game.interactData[0].length ||
-      game.interactData[gridCoords.y][gridCoords.x + 1] > 0
-    ) {
-      game.player.canInteract.right = true;
-    } else {
-      game.player.canInteract.right = false;
+      game.player.isInteracting = true;
     }
   },
 };
