@@ -21,6 +21,7 @@ class Overworld extends Phaser.Scene {
   }
 
   create() {
+    // loading sprites and tilemaps
     const map = this.make.tilemap({ key: "map" });
     const tiles = map.addTilesetImage("debug-tiles", "tiles");
     const bg = map.createLayer("background", tiles, 0, 0);
@@ -29,28 +30,39 @@ class Overworld extends Phaser.Scene {
     map.createLayer("interactable", tiles, 0, 0);
     this.player = this.add.image(80, 64, "player", 0);
 
+    // get json data for checking collisions and interactions
+    const mapJson = this.cache.json.get("mapjson");
+    for (const layer of mapJson.layers) {
+      if (layer.name === "collisions") {
+        this.collisionData = helpers.gridify(layer);
+      } else if (layer.name === "interactable") {
+        this.interactData = helpers.gridify(layer);
+      }
+    }
+    // player setup
     this.player.setOrigin(0, 0);
     this.player.direction = "down";
     this.player.isMoving = false;
-    this.player.isInteracting = false;
     this.player.isColliding = {
       up: false,
       left: false,
       down: false,
       right: false,
     };
-
-    const mapJson = this.cache.json.get("mapjson");
-    for (const layer of mapJson.layers) {
-      if (layer.name === "collisions") {
-        this.collisionData = helpers.gridify(layer);
-      }
-    }
+    this.player.isInteracting = false;
+    this.player.canInteract = {
+      up: false,
+      left: false,
+      down: false,
+      right: false,
+    };
     helpers.player.handleCollisions(this, this.player.x, this.player.y);
 
+    // camera setup
     this.cameras.main.setBounds(0, 0, bg.width, bg.height, true).setZoom(5);
     this.cameras.main.startFollow(this.player);
 
+    // control key registration
     Wkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     Akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     Skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
