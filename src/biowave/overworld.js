@@ -3,7 +3,7 @@ import { TILESIZE, SPEED } from "./config";
 import helpers from "./helpers";
 
 var tileProgress = 0;
-var Wkey, Akey, Skey, Dkey;
+var Wkey, Akey, Skey, Dkey, space;
 
 class Overworld extends Phaser.Scene {
   constructor() {
@@ -34,6 +34,7 @@ class Overworld extends Phaser.Scene {
     this.player.setOrigin(0, 0);
     this.player.direction = "down";
     this.player.isMoving = false;
+    this.player.isInteracting = false;
     this.player.isColliding = {
       up: false,
       left: false,
@@ -60,6 +61,7 @@ class Overworld extends Phaser.Scene {
     Akey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     Skey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     Dkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
   }
 
   update(time, delta) {
@@ -75,6 +77,10 @@ class Overworld extends Phaser.Scene {
         this.player.isMoving = false;
         helpers.player.handleCollisions(this, this.player.x, this.player.y);
       }
+    }
+    if (Phaser.Input.Keyboard.JustDown(space)) {
+      this.player.isInteracting = !this.player.isInteracting;
+      console.log(this.player.isInteracting);
     }
   }
 }
