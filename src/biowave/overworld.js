@@ -88,6 +88,9 @@ class Overworld extends Phaser.Scene {
       );
       if (flavorText) {
         console.log(flavorText);
+        this.scene.launch("Textbox", { text: flavorText });
+      } else {
+        this.scene.stop("Textbox");
       }
     }
   }

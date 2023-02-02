@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Overworld from "./overworld";
+import Textbox from "./textbox";
 
 export const WIDTH = 800;
 export const HEIGHT = 600;
@@ -19,7 +20,7 @@ const config = {
     default: "arcade",
     arcade: { gravity: { y: 0 } },
   },
-  scene: [Overworld],
+  scene: [Overworld, Textbox],
 };
 
 export default config;
