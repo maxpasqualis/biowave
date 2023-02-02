@@ -14,6 +14,7 @@ class Overworld extends Phaser.Scene {
     this.load.image("tiles", "assets/tilemaps/debug-tiles.png");
     this.load.tilemapTiledJSON("map", "assets/tilemaps/debug-map.json");
     this.load.json("mapjson", "assets/tilemaps/debug-map.json");
+    this.load.json("interactdata", "assets/interactives.json");
     this.load.spritesheet("player", "assets/sprites/temp-player.png", {
       frameWidth: TILESIZE,
       frameHeight: TILESIZE,
@@ -31,12 +32,13 @@ class Overworld extends Phaser.Scene {
     this.player = this.add.image(80, 64, "player", 0);
 
     // get json data for checking collisions and interactions
+    this.interactionData = this.cache.json.get("interactdata");
     const mapJson = this.cache.json.get("mapjson");
     for (const layer of mapJson.layers) {
       if (layer.name === "collisions") {
-        this.collisionData = helpers.gridify(layer);
+        this.collisionMap = helpers.gridify(layer);
       } else if (layer.name === "interactable") {
-        this.interactData = helpers.gridify(layer);
+        this.interactMap = helpers.gridify(layer);
       }
     }
     // player setup
@@ -80,8 +82,13 @@ class Overworld extends Phaser.Scene {
       }
     }
     if (Phaser.Input.Keyboard.JustDown(space)) {
-      helpers.player.initiateInteraction(this);
-      console.log(this.player.interactable);
+      const flavorText = helpers.player.getFlavorTextArray(
+        this,
+        this.interactionData
+      );
+      if (flavorText) {
+        console.log(flavorText);
+      }
     }
   }
 }

@@ -1,43 +1,39 @@
 import { TILESIZE } from "./config";
 
 function checkForInteractability(game, x, y) {
-  // looks like a lot of code, but it's a switch case so it's decently efficient!
+  // looks like a lot of code, but it's just a long switch case
   const gridCoords = getGridCoords(x, y);
-  switch (game.player.direction) {
-    case "up":
-      if (game.interactData[gridCoords.y - 1][gridCoords.x]) {
-        game.player.interactable =
-          game.interactData[gridCoords.y - 1][gridCoords.x];
-      } else {
+  if (!game.player.interactable) {
+    switch (game.player.direction) {
+      case "up":
+        if (game.interactMap[gridCoords.y - 1][gridCoords.x]) {
+          game.player.interactable =
+            game.interactMap[gridCoords.y - 1][gridCoords.x];
+        }
+        break;
+      case "down":
+        if (game.interactMap[gridCoords.y + 1][gridCoords.x]) {
+          game.player.interactable =
+            game.interactMap[gridCoords.y + 1][gridCoords.x];
+        }
+        break;
+      case "left":
+        if (game.interactMap[gridCoords.y][gridCoords.x - 1]) {
+          game.player.interactable =
+            game.interactMap[gridCoords.y][gridCoords.x - 1];
+        }
+        break;
+      case "right":
+        if (game.interactMap[gridCoords.y][gridCoords.x + 1]) {
+          game.player.interactable =
+            game.interactMap[gridCoords.y][gridCoords.x + 1];
+        }
+        break;
+      default:
         game.player.interactable = null;
-      }
-      break;
-    case "down":
-      if (game.interactData[gridCoords.y + 1][gridCoords.x]) {
-        game.player.interactable =
-          game.interactData[gridCoords.y + 1][gridCoords.x];
-      } else {
-        game.player.interactable = null;
-      }
-      break;
-    case "left":
-      if (game.interactData[gridCoords.y][gridCoords.x - 1]) {
-        game.player.interactable =
-          game.interactData[gridCoords.y][gridCoords.x - 1];
-      } else {
-        game.player.interactable = null;
-      }
-      break;
-    case "right":
-      if (game.interactData[gridCoords.y][gridCoords.x + 1]) {
-        game.player.interactable =
-          game.interactData[gridCoords.y][gridCoords.x + 1];
-      } else {
-        game.player.interactable = null;
-      }
-      break;
-    default:
-      game.player.interactable = null;
+    }
+  } else {
+    game.player.interactable = null;
   }
 }
 
@@ -58,6 +54,7 @@ function gridify(layer) {
 }
 
 const player = {
+  //TODO: refactor some of these to include switch cases
   setSprite(game, upkey, downkey, leftkey, rightkey) {
     if (
       !game.player.isMoving &&
@@ -113,15 +110,15 @@ const player = {
     const gridCoords = getGridCoords(x, y);
     if (
       gridCoords.y - 1 <= -1 ||
-      game.collisionData[gridCoords.y - 1][gridCoords.x]
+      game.collisionMap[gridCoords.y - 1][gridCoords.x]
     ) {
       game.player.isColliding.up = true;
     } else {
       game.player.isColliding.up = false;
     }
     if (
-      gridCoords.y + 1 >= game.collisionData.length ||
-      game.collisionData[gridCoords.y + 1][gridCoords.x]
+      gridCoords.y + 1 >= game.collisionMap.length ||
+      game.collisionMap[gridCoords.y + 1][gridCoords.x]
     ) {
       game.player.isColliding.down = true;
     } else {
@@ -129,23 +126,28 @@ const player = {
     }
     if (
       gridCoords.x - 1 <= -1 ||
-      game.collisionData[gridCoords.y][gridCoords.x - 1]
+      game.collisionMap[gridCoords.y][gridCoords.x - 1]
     ) {
       game.player.isColliding.left = true;
     } else {
       game.player.isColliding.left = false;
     }
     if (
-      gridCoords.x + 1 >= game.collisionData[0].length ||
-      game.collisionData[gridCoords.y][gridCoords.x + 1]
+      gridCoords.x + 1 >= game.collisionMap[0].length ||
+      game.collisionMap[gridCoords.y][gridCoords.x + 1]
     ) {
       game.player.isColliding.right = true;
     } else {
       game.player.isColliding.right = false;
     }
   },
-  initiateInteraction(game) {
+  getFlavorTextArray(game, data) {
     checkForInteractability(game, game.player.x, game.player.y);
+    if (data[game.player.interactable]) {
+      return data[game.player.interactable].text;
+    } else {
+      return null;
+    }
   },
 };
 const helpers = { getGridCoords, gridify, player };
