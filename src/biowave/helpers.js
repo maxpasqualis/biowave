@@ -58,6 +58,7 @@ const player = {
   setSprite(game, upkey, downkey, leftkey, rightkey) {
     if (
       !game.player.isMoving &&
+      !game.player.interactable &&
       (upkey.isDown || leftkey.isDown || downkey.isDown || rightkey.isDown)
     ) {
       game.player.isMoving = true;
@@ -74,7 +75,7 @@ const player = {
         game.player.direction = "right";
         game.player.setTexture("player", 7);
       }
-    } else if (!game.player.isMoving) {
+    } else if (!game.player.isMoving || game.player.interactable) {
       if (game.player.direction === "up") {
         game.player.setTexture("player", 4);
       } else if (game.player.direction === "left") {
@@ -87,23 +88,25 @@ const player = {
     }
   },
   handleMovement(game, speed) {
-    if (game.player.direction === "up" && !game.player.isColliding.up) {
-      game.player.y -= speed;
-    } else if (
-      game.player.direction === "down" &&
-      !game.player.isColliding.down
-    ) {
-      game.player.y += speed;
-    } else if (
-      game.player.direction === "left" &&
-      !game.player.isColliding.left
-    ) {
-      game.player.x -= speed;
-    } else if (
-      game.player.direction === "right" &&
-      !game.player.isColliding.right
-    ) {
-      game.player.x += speed;
+    if (!game.player.interactable) {
+      if (game.player.direction === "up" && !game.player.isColliding.up) {
+        game.player.y -= speed;
+      } else if (
+        game.player.direction === "down" &&
+        !game.player.isColliding.down
+      ) {
+        game.player.y += speed;
+      } else if (
+        game.player.direction === "left" &&
+        !game.player.isColliding.left
+      ) {
+        game.player.x -= speed;
+      } else if (
+        game.player.direction === "right" &&
+        !game.player.isColliding.right
+      ) {
+        game.player.x += speed;
+      }
     }
   },
   handleCollisions(game, x, y) {

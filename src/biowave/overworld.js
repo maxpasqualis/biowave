@@ -78,7 +78,6 @@ class Overworld extends Phaser.Scene {
         tileProgress = 0;
         this.player.isMoving = false;
         helpers.player.handleCollisions(this, this.player.x, this.player.y);
-        console.log(helpers.getGridCoords(this.player.x, this.player.y));
       }
     }
     if (Phaser.Input.Keyboard.JustDown(space)) {
@@ -87,7 +86,6 @@ class Overworld extends Phaser.Scene {
         this.interactionData
       );
       if (flavorText) {
-        console.log(flavorText);
         this.scene.launch("Textbox", { text: flavorText });
       } else {
         this.scene.stop("Textbox");

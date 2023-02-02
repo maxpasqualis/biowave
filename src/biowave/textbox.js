@@ -7,7 +7,6 @@ class Textbox extends Phaser.Scene {
   }
 
   init(data) {
-    console.log("init", data);
     this.textToRender = data.text;
   }
 
