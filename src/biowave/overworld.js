@@ -91,7 +91,7 @@ class Overworld extends Phaser.Scene {
         helpers.player.handleCollisions(this, this.player.x, this.player.y);
       }
     }
-    if (Phaser.Input.Keyboard.JustDown(space)) {
+    if (Phaser.Input.Keyboard.JustDown(space) && !this.player.isMoving) {
       const flavorText = helpers.player.getFlavorTextArray(this);
       if (flavorText) {
         this.scene.launch("Textbox", { text: flavorText });
