@@ -11,9 +11,10 @@ export const SPEED = 0.8;
 
 export const TEXTBOXSTYLE = {
   fontFamily: "Arcade",
-  fontSize: "20px",
+  fontSize: "30px",
   maxLines: 4,
   wordWrap: { width: WIDTH - 100, useAdvancedWrap: true },
+  resolution: 6,
 };
 
 const config = {

@@ -30,7 +30,7 @@ class Textbox extends Phaser.Scene {
 
     this.make.text({
       x: this.BOXX + 25,
-      y: this.BOXY + 25,
+      y: this.BOXY + 20,
       text: `${this.textToRender}`,
       style: TEXTBOXSTYLE,
     });

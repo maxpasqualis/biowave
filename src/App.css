@@ -1,7 +1,11 @@
 /* for game */
 @font-face {
   font-family: "Arcade";
-  src: url('../public/assets/joystix\ monospace.otf');
+  src: url('../public/assets/visitor1.ttf');
+}
+
+#load {
+  font-family: "Arcade"
 }
 
 .App {

@@ -1,10 +1,13 @@
 [
         {"name": "blue ball",
         "coords": [{"x": 5, "y": 6}],
-        "text":["this is a blue ball"]},
-
+        "text":["this is a blue ball."]},
 
         {"name": "pink ball",
-        "coords": [{"x": 2, "y": 4}, {"x": 7, "y": 1}],
-        "text": ["this is a pink ball"]}
+        "coords": [{"x": 7, "y": 1}],
+        "text": ["this is a pink ball."]},
+
+        {"name": "pink ball",
+        "coords": [{"x": 2, "y": 4}],
+        "text": ["this is another pink ball."]}
 ]
