@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { WIDTH, HEIGHT } from "./config";
+import { WIDTH, HEIGHT, TEXTBOXSTYLE } from "./config";
 
 class Textbox extends Phaser.Scene {
   constructor() {
@@ -28,7 +28,12 @@ class Textbox extends Phaser.Scene {
     );
     this.graphics.fillRect(this.BOXX, this.BOXY, this.BOXWIDTH, this.BOXHEIGHT);
 
-    this.add.text(this.BOXX + 25, this.BOXY + 25, `${this.textToRender}`);
+    this.make.text({
+      x: this.BOXX + 25,
+      y: this.BOXY + 25,
+      text: `${this.textToRender}`,
+      style: TEXTBOXSTYLE,
+    });
   }
   update() {}
 }

@@ -9,6 +9,13 @@ export const TILESIZE = 16;
 // ex. if tilesize is 16, speeds include 0.2, 0.4, 0.5, 0.8, or 1
 export const SPEED = 0.8;
 
+export const TEXTBOXSTYLE = {
+  fontFamily: "Arcade",
+  fontSize: "20px",
+  maxLines: 4,
+  wordWrap: { width: WIDTH - 100, useAdvancedWrap: true },
+};
+
 const config = {
   type: Phaser.AUTO,
   parent: "game-container",
