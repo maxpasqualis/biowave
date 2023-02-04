@@ -14,7 +14,7 @@ class Overworld extends Phaser.Scene {
     this.load.image("tiles", "assets/tilemaps/debug-tiles.png");
     this.load.tilemapTiledJSON("map", "assets/tilemaps/debug-map.json");
     this.load.json("mapjson", "assets/tilemaps/debug-map.json");
-    this.load.json("interactdata", "assets/interactives.json");
+    this.load.json("interactdata", "assets/interactables.json");
     this.load.spritesheet("player", "assets/sprites/temp-player.png", {
       frameWidth: TILESIZE,
       frameHeight: TILESIZE,
@@ -31,16 +31,27 @@ class Overworld extends Phaser.Scene {
     map.createLayer("interactable", tiles, 0, 0);
     this.player = this.add.image(80, 64, "player", 0);
 
-    // get json data for checking collisions and interactions
-    this.interactionData = this.cache.json.get("interactdata");
+    // get json data for checking collisions
     const mapJson = this.cache.json.get("mapjson");
     for (const layer of mapJson.layers) {
       if (layer.name === "collisions") {
         this.collisionMap = helpers.gridify(layer);
-      } else if (layer.name === "interactable") {
-        this.interactMap = helpers.gridify(layer);
       }
     }
+    // creates map of interactable objects
+    this.interactionData = this.cache.json.get("interactdata");
+    this.interactMap = [];
+    for (let i = 0; i < mapJson.layers[0].height; i += 1) {
+      this.interactMap.push([]);
+      for (let j = 0; j < mapJson.layers[0].width; j += 1)
+        this.interactMap[i].push(null);
+    }
+    for (const interactable of this.interactionData) {
+      for (const coordSet of interactable.coords) {
+        this.interactMap[coordSet.y][coordSet.x] = interactable;
+      }
+    }
+
     // player setup
     this.player.setOrigin(0, 0);
     this.player.direction = "down";
@@ -81,10 +92,7 @@ class Overworld extends Phaser.Scene {
       }
     }
     if (Phaser.Input.Keyboard.JustDown(space)) {
-      const flavorText = helpers.player.getFlavorTextArray(
-        this,
-        this.interactionData
-      );
+      const flavorText = helpers.player.getFlavorTextArray(this);
       if (flavorText) {
         this.scene.launch("Textbox", { text: flavorText });
       } else {

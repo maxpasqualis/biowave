@@ -144,10 +144,10 @@ const player = {
       game.player.isColliding.right = false;
     }
   },
-  getFlavorTextArray(game, data) {
+  getFlavorTextArray(game) {
     checkForInteractability(game, game.player.x, game.player.y);
-    if (data[game.player.interactable]) {
-      return data[game.player.interactable].text;
+    if (game.player.interactable) {
+      return game.player.interactable.text;
     } else {
       return null;
     }
