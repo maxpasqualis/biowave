@@ -1,0 +1,16 @@
+[
+        {"id": 0,
+        "name": "blue ball",
+        "coords": [{"x": 5, "y": 6}],
+        "text":["this is a blue ball.", "hell yeah"]},
+
+        {"id": 1,
+        "name": "pink ball",
+        "coords": [{"x": 7, "y": 1}],
+        "text": ["this is a pink ball."]},
+
+        {"id": 2,
+        "name": "pink ball",
+        "coords": [{"x": 2, "y": 4}],
+        "text": ["this is a pink ball, just sitting here. not much to say about this.", "pink hhehehe", "its ball"]}
+]
