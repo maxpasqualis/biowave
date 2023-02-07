@@ -46,8 +46,11 @@ class Overworld extends Phaser.Scene {
       for (let j = 0; j < mapJson.layers[0].width; j += 1)
         this.interactMap[i].push(null);
     }
+
     for (const interactable of this.interactionData) {
+      // places interactable zones
       for (const coordSet of interactable.coords) {
+        interactable.timesInteracted = 0;
         this.interactMap[coordSet.y][coordSet.x] = interactable;
       }
     }
@@ -94,7 +97,12 @@ class Overworld extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(space) && !this.player.isMoving) {
       const flavorText = helpers.player.getFlavorTextArray(this);
       if (flavorText) {
-        this.scene.launch("Textbox", { text: flavorText });
+        this.scene.launch("Textbox", {
+          text: flavorText[this.player.interactable.timesInteracted],
+        });
+        if (this.player.interactable.timesInteracted < flavorText.length - 1) {
+          this.player.interactable.timesInteracted += 1;
+        }
       } else {
         this.scene.stop("Textbox");
       }
