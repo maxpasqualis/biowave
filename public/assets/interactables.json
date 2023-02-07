@@ -12,5 +12,5 @@
         {"id": 2,
         "name": "pink ball",
         "coords": [{"x": 2, "y": 4}],
-        "text": [["this is a pink ball, just sitting here", "not much to say about this."], "pink hhehehe"]}
+        "text": ["this is a pink ball, just sitting here. not much to say about this.", "pink hhehehe", "its ball"]}
 ]
