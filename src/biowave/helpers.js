@@ -6,25 +6,37 @@ function checkForInteractability(game, x, y) {
   if (!game.player.interactable) {
     switch (game.player.direction) {
       case "up":
-        if (game.interactMap[gridCoords.y - 1][gridCoords.x]) {
+        if (
+          gridCoords.y - 1 >= 0 &&
+          game.interactMap[gridCoords.y - 1][gridCoords.x]
+        ) {
           game.player.interactable =
             game.interactMap[gridCoords.y - 1][gridCoords.x];
         }
         break;
       case "down":
-        if (game.interactMap[gridCoords.y + 1][gridCoords.x]) {
+        if (
+          gridCoords.y + 1 < game.interactMap.length &&
+          game.interactMap[gridCoords.y + 1][gridCoords.x]
+        ) {
           game.player.interactable =
             game.interactMap[gridCoords.y + 1][gridCoords.x];
         }
         break;
       case "left":
-        if (game.interactMap[gridCoords.y][gridCoords.x - 1]) {
+        if (
+          gridCoords.x - 1 >= 0 &&
+          game.interactMap[gridCoords.y][gridCoords.x - 1]
+        ) {
           game.player.interactable =
             game.interactMap[gridCoords.y][gridCoords.x - 1];
         }
         break;
       case "right":
-        if (game.interactMap[gridCoords.y][gridCoords.x + 1]) {
+        if (
+          gridCoords.x + 1 < game.interactMap[0].length &&
+          game.interactMap[gridCoords.y][gridCoords.x + 1]
+        ) {
           game.player.interactable =
             game.interactMap[gridCoords.y][gridCoords.x + 1];
         }
