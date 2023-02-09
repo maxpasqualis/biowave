@@ -24,6 +24,7 @@ const config = {
   width: WIDTH,
   height: HEIGHT,
   pixelArt: true,
+  zoom: 0.75,
   physics: {
     default: "arcade",
     arcade: { gravity: { y: 0 } },

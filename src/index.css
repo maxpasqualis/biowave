@@ -2,21 +2,52 @@
   font-family: "Arcade";
   src: url('../public/assets/visitor1.ttf');
 }
-
 #load {
   font-family: "Arcade"
 }
 
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  text-align: center;
+  background-color: #3B3045;
+  color: white;
+}
+
+nav, #page-content {
+  margin: 0 auto;
+  width: 60vw;
+}
+
+#header h1 {
+  background-color: blueviolet;
+  width: 90vw;
+  margin: 20px auto 0;
+  padding: 5px 0;
+}
+
+nav {
+  background-color: deepskyblue;
+  padding: 5px 0;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#page-content {
+  background-color: #210011;
+  padding-top: 30px;
+}
+
+#footer {
+  padding: 20px 0 10px;
 }
