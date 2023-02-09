@@ -76,26 +76,26 @@ const player = {
       game.player.isMoving = true;
       if (upkey.isDown) {
         game.player.direction = "up";
-        game.player.setTexture("player", 5);
+        game.player.play("playerBack", true);
       } else if (leftkey.isDown) {
         game.player.direction = "left";
-        game.player.setTexture("player", 3);
+        game.player.play("playerLeft", true);
       } else if (downkey.isDown) {
         game.player.direction = "down";
-        game.player.setTexture("player", 1);
+        game.player.play("playerFront", true);
       } else if (rightkey.isDown) {
         game.player.direction = "right";
-        game.player.setTexture("player", 7);
+        game.player.play("playerRight", true);
       }
     } else if (!game.player.isMoving || game.player.interactable) {
       if (game.player.direction === "up") {
-        game.player.setTexture("player", 4);
+        game.player.setTexture("player", 8);
       } else if (game.player.direction === "left") {
-        game.player.setTexture("player", 2);
+        game.player.setTexture("player", 4);
       } else if (game.player.direction === "down") {
         game.player.setTexture("player", 0);
       } else if (game.player.direction === "right") {
-        game.player.setTexture("player", 6);
+        game.player.setTexture("player", 12);
       }
     }
   },

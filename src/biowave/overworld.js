@@ -15,7 +15,7 @@ class Overworld extends Phaser.Scene {
     this.load.tilemapTiledJSON("map", "assets/tilemaps/debug-map.json");
     this.load.json("mapjson", "assets/tilemaps/debug-map.json");
     this.load.json("interactdata", "assets/interactables.json");
-    this.load.spritesheet("player", "assets/sprites/temp-player.png", {
+    this.load.spritesheet("player", "assets/sprites/player.png", {
       frameWidth: TILESIZE,
       frameHeight: TILESIZE,
     }); // TEMP SPRITES - change later
@@ -29,7 +29,33 @@ class Overworld extends Phaser.Scene {
     // map.createLayer("collisions", tiles, 0, 0); // for debugging
     map.createLayer("walls", tiles, 0, 0);
     map.createLayer("interactable", tiles, 0, 0);
-    this.player = this.add.image(80, 64, "player", 0);
+    this.player = this.add.sprite(80, 64, "player", 0);
+
+    // create animations
+    this.player.anims.create({
+      key: "playerFront",
+      frames: this.anims.generateFrameNumbers("player", { start: 0, end: 3 }),
+      frameRate: 7,
+      repeat: -1,
+    });
+    this.player.anims.create({
+      key: "playerBack",
+      frames: this.anims.generateFrameNumbers("player", { start: 8, end: 11 }),
+      frameRate: 7,
+      repeat: -1,
+    });
+    this.player.anims.create({
+      key: "playerLeft",
+      frames: this.anims.generateFrameNumbers("player", { start: 4, end: 7 }),
+      frameRate: 7,
+      repeat: -1,
+    });
+    this.player.anims.create({
+      key: "playerRight",
+      frames: this.anims.generateFrameNumbers("player", { start: 12, end: 15 }),
+      frameRate: 7,
+      repeat: -1,
+    });
 
     // get json data for checking collisions
     const mapJson = this.cache.json.get("mapjson");
