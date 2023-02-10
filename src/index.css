@@ -20,6 +20,7 @@ body {
 nav, #page-content {
   margin: 0 auto;
   width: 60vw;
+  min-width: 600px;
 }
 
 #header h1 {
@@ -30,17 +31,41 @@ nav, #page-content {
 }
 
 nav {
-  background-color: deepskyblue;
-  padding: 5px 0;
+  background-color: #00a2ff;
+}
+nav li:hover {
+  background-color: #0091ff;
 }
 
 nav ul {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  padding: 8px 40px;
+}
+
+nav li {
+  padding: 8px 0;
+  border-right: 1px solid white;
+}
+
+nav li:first-child {
+  border-left: 1px solid white;
+}
+
+canvas {
+  border: 2px solid white;
+  width: fit-content;
+  height: fit-content;
+
 }
 
 #page-content {
