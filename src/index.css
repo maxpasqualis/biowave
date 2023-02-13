@@ -9,6 +9,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 body {
@@ -32,6 +33,7 @@ nav, #page-content {
 
 nav {
   background-color: #00a2ff;
+  font-weight: bold;
 }
 nav li:hover {
   background-color: #0091ff;
@@ -73,6 +75,12 @@ canvas {
   padding-top: 30px;
 }
 
+p {
+  margin: 20px 100px;
+}
+
 #footer {
-  padding: 20px 0 10px;
+  padding-bottom: 1px;
+  padding-top: 5px;
+  font-size: 12px;
 }
