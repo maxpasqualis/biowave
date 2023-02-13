@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 function Header() {
     return (
         <div id="header">
-            <h1>Title</h1>
+            <h1>Biowave</h1>
             <Navbar />
         </div>
     );
