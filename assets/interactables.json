@@ -1,16 +1,31 @@
 [
         {"id": 0,
-        "name": "blue ball",
-        "coords": [{"x": 5, "y": 6}],
-        "text":["this is a blue ball.", "hell yeah"]},
+        "name": "empty trash",
+        "coords": [{"x": 2, "y": 12},{"x": 2, "y": 14}],
+        "text":["The trash can is empty."]},
 
-        {"id": 1,
-        "name": "pink ball",
-        "coords": [{"x": 7, "y": 1}],
-        "text": ["this is a pink ball."]},
+        {"id": 0,
+        "name": "full trash",
+        "coords": [{"x": 10, "y": 19}],
+        "text":["Whoa, this trash can is full of valuable items!","Unfortunately, you can't pick them up because an inventory system hasn't been implemented yet."]},
 
         {"id": 2,
-        "name": "pink ball",
-        "coords": [{"x": 2, "y": 4}],
-        "text": ["this is a pink ball, just sitting here. not much to say about this.", "pink hhehehe", "its ball"]}
+        "name": "bench",
+        "coords": [{"x": 13, "y": 2},{"x": 14, "y": 2},{"x": 15, "y": 3},{"x": 15, "y": 4}, {"x": 15, "y": 5}, {"x": 7, "y": 19}, {"x": 8, "y": 19}],
+        "text": ["A grimy city bench."]},
+
+        {"id": 3,
+        "name": "pink npc",
+        "coords": [{"x": 2, "y": 13}],
+        "text": ["Hey kid, it's getting late. Probably should get yourself home soon.","What, don't wanna take advice from a weird guy standing between two trash cans?"]},
+
+        {"id": 4,
+        "name": "blue npc",
+        "coords": [{"x": 18, "y": 7}],
+        "text": ["Don't mind me, just waiting for my friend."]},
+
+        {"id": 3,
+        "name": "red npc",
+        "coords": [{"x": 9, "y": 19}],
+        "text": ["My bus was supposed to arrive half an hour ago..."]}
 ]
