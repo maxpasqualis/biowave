@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/biowave/static/css/main.5b5516af.css",
-    "main.js": "/biowave/static/js/main.9de17f55.js",
+    "main.js": "/biowave/static/js/main.23b94d2d.js",
     "static/media/visitor1.ttf": "/biowave/static/media/visitor1.c5ed9c8a2a0e2296150f.ttf",
     "index.html": "/biowave/index.html",
     "main.5b5516af.css.map": "/biowave/static/css/main.5b5516af.css.map",
-    "main.9de17f55.js.map": "/biowave/static/js/main.9de17f55.js.map"
+    "main.23b94d2d.js.map": "/biowave/static/js/main.23b94d2d.js.map"
   },
   "entrypoints": [
     "static/css/main.5b5516af.css",
-    "static/js/main.9de17f55.js"
+    "static/js/main.23b94d2d.js"
   ]
 }
