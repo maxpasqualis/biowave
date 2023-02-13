@@ -11,9 +11,9 @@ class Overworld extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("tiles", "assets/tilemaps/debug-tiles.png");
-    this.load.tilemapTiledJSON("map", "assets/tilemaps/debug-map.json");
-    this.load.json("mapjson", "assets/tilemaps/debug-map.json");
+    this.load.image("tiles", "assets/tilemaps/city-tiles.png");
+    this.load.tilemapTiledJSON("map", "assets/tilemaps/city-map.json");
+    this.load.json("mapjson", "assets/tilemaps/city-map.json");
     this.load.json("interactdata", "assets/interactables.json");
     this.load.spritesheet("player", "assets/sprites/player.png", {
       frameWidth: TILESIZE,
@@ -24,12 +24,14 @@ class Overworld extends Phaser.Scene {
   create() {
     // loading sprites and tilemaps
     const map = this.make.tilemap({ key: "map" });
-    const tiles = map.addTilesetImage("debug-tiles", "tiles");
-    const bg = map.createLayer("background", tiles, 0, 0);
-    // map.createLayer("collisions", tiles, 0, 0); // for debugging
-    map.createLayer("walls", tiles, 0, 0);
-    map.createLayer("interactable", tiles, 0, 0);
-    this.player = this.add.sprite(80, 64, "player", 0);
+    const tiles = map.addTilesetImage("city-tiles", "tiles");
+    const bg = map.createLayer("road", tiles, 0, 0);
+    map.createLayer("sidewalk", tiles, 0, 0);
+    map.createLayer("buildings", tiles, 0, 0);
+    map.createLayer("objects", tiles, 0, 0);
+    this.player = this.add.sprite(48, 32, "player", 0);
+    map.createLayer("buildings-overlap", tiles, 0, 0);
+    // map.createLayer("collisions", tiles, 0, 0);
 
     // create animations
     this.player.anims.create({
